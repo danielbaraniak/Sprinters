@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, make_response
 from flask_cors import CORS, cross_origin
 import pickle
 
@@ -23,7 +23,9 @@ def predict_price():
             features.append(data.get(field))
         final_features = ([features])
         prediction = model.predict(final_features)
-    return jsonify(str(f'Predicted price: {prediction[0]}'))
+    return {
+        'predicted_price': str(prediction[0])
+    }
 
 if __name__ == '__main__':
     app.run(debug=True)
