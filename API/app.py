@@ -1,18 +1,10 @@
-from flask import Flask, jsonify, request, make_response
-from flask_cors import CORS, cross_origin
+from flask import Flask, request
 import pickle
 
 app = Flask(__name__)
-cors = CORS(app)
-app.config['CORS_HEADERS'] = 'Content-Type'
 fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building', 'market', 'voivodeship']
 
-model = pickle.load(open('model-name-path', 'rb'))
-
-@app.route('/')
-@cross_origin
-def home_page():
-    return 'Amazing home page'
+model = pickle.load(open('trained-model.pickle', 'rb'))
 
 @app.route('/predict-price', methods=['POST'])
 def predict_price():
@@ -20,7 +12,12 @@ def predict_price():
         features = []
         data = request.form
         for field in fields:
-            features.append(data.get(field))
+            if field == 'floor' or field == 'rooms':
+                features.append(int(data.get(field)))
+            elif field == 'area':
+                features.append(float(data.get(field)))
+            else:
+                features.append(data.get(field))
         final_features = ([features])
         prediction = model.predict(final_features)
     return {
