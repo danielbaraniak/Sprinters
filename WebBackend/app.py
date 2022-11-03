@@ -18,10 +18,10 @@ def _get_location_data(latitude, longitude):
     location_fields = ['City', 'Population']
     querystring = {f'latitude':{latitude}, 'longitude':{longitude}, 'range':'0'}
     headers = {
-        "X-RapidAPI-Key": API_KEY,
-        "X-RapidAPI-Host": "geocodeapi.p.rapidapi.com"
+        'X-RapidAPI-Key': API_KEY,
+        'X-RapidAPI-Host': 'geocodeapi.p.rapidapi.com'
     }
-    response = requests.request("GET", url, headers=headers, params=querystring)
+    response = requests.request('GET', url, headers=headers, params=querystring)
     nearest_city = response[0]
     cleared_location = {location_field: nearest_city[location_field] for location_field in location_fields}
     return cleared_location
