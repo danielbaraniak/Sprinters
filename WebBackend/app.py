@@ -7,7 +7,7 @@ fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building',
     'market', 'voivodeship', 'city_name', 'population', 'longitude', 'latitude']
 
 model = joblib.load('model.pkl')
-featurizer_url = '69.69.69.69:5000'
+featurizer_url = '69.69.69.69:5000/encode-data'
 
 @app.route('/predict-price', methods=['POST'])
 def predict_price():
