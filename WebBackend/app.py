@@ -11,11 +11,10 @@ API_KEY = details_dict['API_KEY']
 app = Flask(__name__)
 fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building', 'market', 'longitude', 'latitude']
 model = joblib.load('model.pkl')
-featurizer_url = '69.69.69.69:5000/encode-data'
 
 def _get_location_data(latitude, longitude):
     url = 'https://geocodeapi.p.rapidapi.com/GetNearestCities'
-    location_fields = ['City', 'Population']
+    location_fields = ['Population', 'CountryId']
     querystring = {f'latitude':{latitude}, 'longitude':{longitude}, 'range':'0'}
     headers = {
         'X-RapidAPI-Key': API_KEY,
@@ -36,11 +35,13 @@ def predict_price():
             features['latitude'],
             features['longitude']
         )
+        if location_features['CountryId'] != 'PL':
+            return {'error': 'Please drop pin in boarders of Poland'}, 400
         features = features | location_features
         ready_data = encoder.transform(features)
         prediction = model.predict(ready_data)
     return {
-        'predicted_price': str(prediction[0])
+        'predicted_price': str(prediction)
     }
 
 if __name__ == '__main__':
