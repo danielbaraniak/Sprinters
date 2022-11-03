@@ -37,8 +37,8 @@ def predict_price():
             features['longitude']
         )
         features = features | location_features
-        response = requests.post(url=featurizer_url, data=features)
-        prediction = model.predict(response.data)
+        ready_data = encoder.transform(features)
+        prediction = model.predict(ready_data)
     return {
         'predicted_price': str(prediction[0])
     }
