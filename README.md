@@ -38,3 +38,24 @@ Input
   "latitude": 51.805085715344035
 }
 ```
+
+## Installation
+
+Firstly
+```bash
+cd WebBackend
+```
+Create and run virtual environment
+
+```bash
+python3 -m venv tutorial-env
+source venv/bin/activate
+```
+Install all the requirements
+```bash
+pip/pip3 install -r requirements.txt
+```
+Finally run flask application
+```bash
+python3 app.py
+```
