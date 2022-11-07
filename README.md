@@ -21,8 +21,7 @@ Finally run flask application
 ```bash
 python3 app.py
 ```
-
-
+\
 ## API Reference
 
 #### Get predicted price
