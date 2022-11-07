@@ -5,7 +5,7 @@ Competance project
 
 #### Get predicted price
 
-```http
+```bash
   POST /predict-price
 ```
 Limits
