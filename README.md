@@ -16,7 +16,7 @@ Input
 | Parameter | Type     | Is required| Restrictions  |
 | :-------- | :------- | :--------- | :----------- |
 | `offer_type` | `string` | ✅| X |
-| `floor` | `float` | ✅  | In range from -1 to 11 |
+| `floor` | `float` | ✅  | In range from -1.00 to 11.00 |
 | `area` | `float` | ✅  | Minimum value is 10.00 |
 | `rooms` | `integer` | ✅| Minimum value is 1 |
 | `offer_type_of_building` | `string` | ✅| X |
