@@ -21,7 +21,13 @@ Finally run flask application
 ```bash
 python3 app.py
 ```
-\
+
+## Settings
+- Find file template_settings.cfg
+- Copy it and rename to settings.cfg
+- Get your api key: https://rapidapi.com/Noggle/api/reverse-geocoding-and-geolocation-service/
+- Fill in necessary settings
+
 ## API Reference
 
 #### Get predicted price
