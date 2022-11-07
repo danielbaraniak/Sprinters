@@ -28,12 +28,12 @@ Input
 
 ```http
 {
-  "offer_type":"Private",
-  "floor":1.00,
-  "area":57.0,
-  "rooms":4,
-  "market":"aftermarket",
-  "offer_type_of_building":"Housing Block",
+  "offer_type": "Private",
+  "floor": 1.00,
+  "area": 57.0,
+  "rooms": 4,
+  "market": "aftermarket",
+  "offer_type_of_building": "Housing Block",
   "longitude": 19.742433230687826,
   "latitude": 51.805085715344035
 }
