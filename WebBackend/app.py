@@ -4,6 +4,8 @@ import requests
 from cerberus import Validator
 import configparser
 from flask import Flask, request
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 import joblib
 
 config = configparser.RawConfigParser()
@@ -28,6 +30,12 @@ schema = {
 validator = Validator(schema)
 
 app = Flask(__name__)
+
+limiter = Limiter(
+    app,
+    key_func=get_remote_address,
+    default_limits=['1/5seconds']
+)
 
 def _get_location_data(latitude, longitude):
     url = 'https://geocodeapi.p.rapidapi.com/GetNearestCities'
@@ -58,6 +66,7 @@ def predict_price():
         if location_features['CountryId'] != 'PL':
             return {'error': 'Please drop pin in boarders of Poland'}, 400
         features['population'] = location_features['Population']
+        return 'XD'
         ready_data = encoder.transform(features)
         prediction = model.predict(ready_data)
     return {
