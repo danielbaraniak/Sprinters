@@ -1,7 +1,7 @@
 # Sprinters
 Competance project
 
-###WebBackend
+# WebBackend
 
 ## Installation
 
@@ -12,7 +12,7 @@ cd WebBackend
 Create and run virtual environment
 
 ```bash
-python3 -m venv tutorial-env
+python3 -m venv name-of-virtual-env
 source venv/bin/activate
 ```
 Install all the requirements
