@@ -12,7 +12,7 @@ Limits
 ```
   One can send 1 request for every 5 seconds.
 ```
-
+Input
 | Parameter | Type     | Is required| Restrictions  |
 | :-------- | :------- | :--------- | :----------- |
 | `offer_type` | `string` | ✅| X |
