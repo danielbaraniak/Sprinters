@@ -15,7 +15,7 @@ settings = dict(config.items('sprinters-config'))
 API_KEY = settings['api_key']
 fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building', 'market', 'longitude', 'latitude']
 model = joblib.load(settings['model_path'])
-#encoder = joblib.load(settings['encoder_path'])
+encoder = joblib.load(settings['encoder_path'])
 
 schema = {
     'offer_type': {'type': 'string', 'required': True},
@@ -66,7 +66,6 @@ def predict_price():
         if location_features['CountryId'] != 'PL':
             return {'error': 'Please drop pin in boarders of Poland'}, 400
         features['population'] = location_features['Population']
-        return 'XD'
         ready_data = encoder.transform(features)
         prediction = model.predict(ready_data)
     return {
