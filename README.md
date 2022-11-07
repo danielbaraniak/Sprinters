@@ -12,8 +12,8 @@ cd WebBackend
 Create and run virtual environment
 
 ```bash
-python3 -m venv name-of-virtual-env
-source venv/bin/activate
+python3 -m venv sample-name
+source sample-name/bin/activate
 ```
 Install all the requirements
 ```bash
