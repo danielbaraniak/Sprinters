@@ -1,5 +1,4 @@
 import json
-import requests
 
 from cerberus import Validator
 import configparser
@@ -7,15 +6,16 @@ from flask import Flask, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import joblib
+import requests
 
 config = configparser.RawConfigParser()
 config.read('settings.cfg')
 settings = dict(config.items('sprinters-config'))
-
 API_KEY = settings['api_key']
-fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building', 'market', 'longitude', 'latitude']
 model = joblib.load(settings['model_path'])
 encoder = joblib.load(settings['encoder_path'])
+
+fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building', 'market', 'longitude', 'latitude']
 
 schema = {
     'offer_type': {'type': 'string', 'required': True},
