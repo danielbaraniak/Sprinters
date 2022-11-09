@@ -1,2 +1,2 @@
 # Sprinters
-Competance project
+Competence project
