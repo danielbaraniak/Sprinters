@@ -3,60 +3,47 @@
   <h1>HOUSE OF YOUR DREAMS</h1>
   <br>
   <br>
-  <Map msg="Hi"/>
+  <Map msg="Hi" @latitude="handleLatitude" @longitude="handleLongitude"/>
   <br>
   <div class="choose">
     <label class="text1" for="offer_type">Offer type:</label>
-      <select v-model="offer_type" name="offer_type" id="offer_type">
+      <select v-model="posts.offer_type" name="offer_type" id="offer_type">
         <option value="" selected disabled hidden></option>
-        <option value="offer_type1">Private</option>
-        <option value="offer_type2">Estate Agency</option>
+        <option value="Private">Private</option>
+        <option value="Estate Agency">Estate Agency</option>
       </select>
     <br>
     <label class="text1" for="floors">Floor:</label>
-      <select v-model="floors" name="floors" id="floors">
+      <select v-model.number="posts.floor" name="floors" id="floors">
         <option value="" selected disabled hidden></option>
-        <option value="floor1m">-1</option>
-        <option value="floor0">0</option>
-        <option value="floor1">1</option>
-        <option value="floor2">2</option>
-        <option value="floor3">3</option>
-        <option value="floor4">4</option>
-        <option value="floor5">5</option>
-        <option value="floor6">6</option>
-        <option value="floor7">7</option>
-        <option value="floor8">8</option>
-        <option value="floor9">9</option>
-        <option value="floor10">10</option>
-        <option value="floor11">11</option>
+        <option value="-1">-1</option>
+        <option value="0">0</option>
+        <option v-for="index in 10" :value="index" :key="index">{{index}}</option>
       </select>
     <br>
     <label class="text1" for="area">Area:</label>
-      <input type="number" id="area" name="area" step="0.01" oninput="validity.valid||(value='');">
+      <input v-model.number="posts.area" type="number" id="area" name="area" min="10.00" step="0.01" oninput="validity.valid||(value='');">
     <br>
     <label class="text1" for="rooms">No of rooms:</label>
-      <select v-model="rooms" name="rooms" id="rooms">
+      <select v-model.number="posts.rooms" name="rooms" id="rooms">
         <option value="" selected disabled hidden></option>
-        <option value="1room" type="number">1</option>
-        <option value="2room" type="number">2</option>
-        <option value="3room" type="number">3</option>
-        <option value="4room" type="number">4</option>
+        <option v-for="index in 4" :value="index" :key="index">{{index}}</option>
       </select>
     <br>
     <label class="text1" for="offer_type_of_building">Type of building:</label>
-      <select v-model="offer_type_of_building" name="offer_type_of_building" id="offer_type_of_building">
+      <select v-model="posts.offer_type_of_building" name="offer_type_of_building" id="offer_type_of_building">
         <option value="" selected disabled hidden></option>
-        <option value="housing_block">Housing block</option>
-        <option value="tenement">Tenement</option>
-        <option value="apartment_building">Apartment building</option>
-        <option value="loft">Loft</option>
+        <option value="Housing Block">Housing block</option>
+        <option value="Tenement">Tenement</option>
+        <option value="Apartment Building">Apartment building</option>
+        <option value="Loft">Loft</option>
       </select>
     <br>
     <label class="text1" for="market">Market:</label>
-      <select v-model="market" name="market" id="market">
+      <select v-model="posts.market" name="market" id="market">
         <option value="" selected disabled hidden></option>
-        <option value="offer_type1">Primary</option>
-        <option value="offer_type2">Aftermarket</option>
+        <option value="Primary">Primary</option>
+        <option value="Aftermarket">Aftermarket</option>
       </select>
     <br>
     <br>
@@ -67,8 +54,7 @@
   <br>
   <br>
   <br>
-  <!--<button v-on:click="checkText">SEARCH</button>-->
-  <button class="button" role="button" v-on:click="search1">SEARCH</button>
+  <button class="button" role="button" v-on:click="postData">SEARCH</button>
 </body>
 </template>
 
@@ -79,23 +65,72 @@ import Map from './components/map.vue'
 
 import Swal from 'sweetalert2'
 
+import axios from 'axios'
+
 export default {
   name: 'App',
   components: {
     Map
   },
 
-  methods: {
-    search1() {
-        Swal.fire({
-        title: 'RESULTS',
-        width: 1000,
-        padding: '3em',
-        color: '#ffffff',
-        background:  '#2e2e2e',
-        confirmButtonColor: "#1beabd"
-        })
+  data(){
+    return {
+      posts:{
+        offer_type:null,
+        floor: null,
+        area: null,
+        rooms: null,
+        market: null,
+        offer_type_of_building: null,
+        longitude: null,
+        latitude: null
+      }
     }
+  },
+
+  result() {
+    return {
+      price: null
+    }
+  },
+
+  methods: {
+    handleLatitude(value) {
+      this.posts.latitude = value;
+    },
+
+    handleLongitude(value) {
+      this.posts.longitude = value;
+    },
+
+    search1(price) {
+      Swal.fire({
+      title: price,
+      width: 1000,
+      padding: '3em',
+      color: '#ffffff',
+      background:  '#2e2e2e',
+      confirmButtonColor: "#1beabd"
+      })
+    },
+
+    postData() {
+
+			let self = this;
+
+			axios.post(`${process.env.VUE_APP_APIURL}/predict-price`, {
+        'offer_type': self.posts.offer_type,
+        'floor': self.posts.floor,
+        'area': self.posts.area,
+        'rooms': self.posts.rooms,
+        'market': self.posts.market,
+        'offer_type_of_building': self.posts.offer_type_of_building,
+        "longitude": self.posts.longitude,
+        "latitude": self.posts.latitude
+      }).then(function (response) {
+        self.search1(response.data.result.price);
+			});
+		},
   }
 }
 </script>
