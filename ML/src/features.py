@@ -24,31 +24,35 @@ columns_order = [
     "voivodeship",
 ]
 
-dummies_features = [
-    "rooms",
-    "floor",
-]
+dummies_features = []
 
-numeric_features = ["longitude", "latitude", "area", "population"]
+numeric_features = [
+    "longitude",
+    "latitude",
+    "area",
+    "population",
+]
 
 onehot_features = []
 
 ordinal_features = [
+    "rooms",
     "offer_type",
     "offer_type_of_building",
     "market",
     "city_name",
     "voivodeship",
+    "floor",
 ]
 
 
-def dummies(df_e):
+def _dummies(df_e):
     df_e = pd.get_dummies(df_e)
     df_e.fillna(value=-2.0, inplace=True)
     return df_e
 
 
-def dummies_feature_names_out(_, input_features: list[str]) -> list:
+def _dummies_feature_names_out(transformer, input_features: list[str]) -> list:
     result = []
     for f in input_features:
         result.append(f)
@@ -100,14 +104,14 @@ ordinal_transformer = Pipeline(
 )
 
 dummies_transformer = FunctionTransformer(
-    dummies, feature_names_out=dummies_feature_names_out
+    _dummies, feature_names_out=_dummies_feature_names_out
 )
 
 preprocessor = ColumnTransformer(
     transformers=[
         ("num", numeric_transformer, numeric_features),
         ("one_hot", onehot_transformer, onehot_features),
-        # ("dummies", dummies_transformer, dummies_features),
+        ("dummies", dummies_transformer, dummies_features),
         ("ordinal", ordinal_transformer, ordinal_features),
     ],
     n_jobs=-1,
@@ -124,13 +128,12 @@ def get_preprocessor(
     """
     if dataset_path:
         df = pd.read_feather(dataset_path)
-        df.drop(["index"], axis=1, inplace=True)
-        print(df.head())
+        df.drop(["index", "price"], axis=1, inplace=True)
 
     if df is None:
         raise ValueError("Empty dataframe. Specify 'dataset_path' or 'df'.")
 
-    preprocessor.fit(df)
+    preprocessor.fit(df.reindex(columns=columns_order))
     return preprocessor
 
 

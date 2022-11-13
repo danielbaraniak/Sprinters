@@ -1,10 +1,17 @@
+from datetime import datetime
+
+import joblib
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.pipeline import Pipeline
+
 from data import clean_dataset
 from features import get_preprocessor
-from features import Encoder, get_encoder
-from sklearn.model_selection import train_test_split
+from models import search_model
+
 
 RAW_DATA_PATH = "ML/data/raw/olx_house_price_Q122.csv"
 INTERIM_DATA_PATH = "ML/data/interim/apartments.feather"
+MODEL_OUTPUT_PATH = "ML/models/" + str(datetime.now()) + ".pkl"
 
 target = "price"
 
@@ -15,13 +22,24 @@ def main():
     X = df.drop(target, axis=1)
     y = df[target]
 
-    X, y = preprocessor.fit_transform(X, y)
+    preprocessor = get_preprocessor(df=X)
 
-    X_train, X_valid, y_train, y_valid = train_test_split(
-        X, y, test_size=0.20, random_state=42
+    X = preprocessor.transform(X)
+
+    model = RandomForestRegressor(max_features="log2", n_estimators=180, n_jobs=-1)
+    model.fit(X, y)
+    # model = search_model(X, y)
+
+    print(f"{model.score(X, y)=}")
+
+    pipeline = Pipeline(
+        steps=[
+            ("preprocessing", preprocessor),
+            ("model", model),
+        ],
     )
 
-    preprocessor = get_preprocessor(df=df)
+    joblib.dump(pipeline, MODEL_OUTPUT_PATH)
 
 
 if __name__ == "__main__":
