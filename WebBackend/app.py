@@ -6,6 +6,7 @@ from flask import Flask, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 import joblib
+import pandas as pd
 import requests
 
 config = configparser.RawConfigParser()
@@ -13,7 +14,6 @@ config.read('settings.cfg')
 settings = dict(config.items('sprinters-config'))
 API_KEY = settings['api_key']
 model = joblib.load(settings['model_path'])
-encoder = joblib.load(settings['encoder_path'])
 
 fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building', 'market', 'longitude', 'latitude']
 
@@ -39,7 +39,7 @@ limiter = Limiter(
 
 def _get_location_data(latitude, longitude):
     url = 'https://geocodeapi.p.rapidapi.com/GetNearestCities'
-    location_fields = ['Population', 'CountryId']
+    location_fields = ['Population', 'CountryId', 'City']
     querystring = {f'latitude':{str(latitude)}, 'longitude':{str(longitude)}, 'range':'0'}
     headers = {
         'X-RapidAPI-Key': API_KEY,
@@ -66,8 +66,9 @@ def predict_price():
         if location_features['CountryId'] != 'PL':
             return {'error': 'Please drop pin in boarders of Poland'}, 400
         features['population'] = location_features['Population']
-        ready_data = encoder.transform(features)
-        prediction = model.predict(ready_data)
+        features['city_name'] = location_features['City']
+        ready_data = pd.DataFrame({k: [v] for k, v in features.items()})
+        prediction = model.predict(ready_data)[0]
     return {
         'predicted_price': str(prediction)
     }
