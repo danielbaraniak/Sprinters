@@ -114,6 +114,19 @@ export default {
       })
     },
 
+    error(data) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: data,
+        width: 1000,
+        padding: '3em',
+        color: '#ffffff',
+        background:  '#2e2e2e',
+        confirmButtonColor: "#1beabd"
+      })
+    },
+
     postData() {
 
 			let self = this;
@@ -129,7 +142,9 @@ export default {
         "latitude": self.posts.latitude
       }).then(function (response) {
         self.search1(response.data.result.price);
-			});
+			}) .catch(function(response){
+        self.error(response.data.result);
+      });
 		},
   }
 }
