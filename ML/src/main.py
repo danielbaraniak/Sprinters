@@ -4,20 +4,28 @@ import joblib
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import Pipeline
 
-from data import clean_dataset
-from features import get_preprocessor
-from models import search_model
+from .data import clean_dataset
+from .features import get_preprocessor
+from .models import search_model
+from configparser import ConfigParser
+from os import path
 
 
-RAW_DATA_PATH = "ML/data/raw/olx_house_price_Q122.csv"
-INTERIM_DATA_PATH = "ML/data/interim/apartments.feather"
-MODEL_OUTPUT_PATH = "ML/models/" + str(datetime.now()) + ".pkl"
+config = ConfigParser()
+config.read("ML/settings.cfg")
+
+
+model_output_path = path.join(
+    config["ml"]["model_dir"],
+    str(datetime.now().strftime("%Y-%m-%d_%H:%M:%S")) + ".pkl",
+)
 
 target = "price"
+raw_data_path = config["ml"]["raw_dataset"]
 
 
 def main():
-    df = clean_dataset(in_path=RAW_DATA_PATH, out_path=INTERIM_DATA_PATH)
+    df = clean_dataset(in_path=raw_data_path)
 
     X = df.drop(target, axis=1)
     y = df[target]
@@ -39,7 +47,7 @@ def main():
         ],
     )
 
-    joblib.dump(pipeline, MODEL_OUTPUT_PATH)
+    joblib.dump(pipeline, model_output_path)
 
 
 if __name__ == "__main__":

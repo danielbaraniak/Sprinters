@@ -3,17 +3,9 @@ from sklearn.compose import TransformedTargetRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.model_selection import RandomizedSearchCV
 
+from . import features_info
 
-hparam_grid = {
-    "n_estimators": np.arange(20, 200, 10),
-    "max_depth": [None, 3, 5, 10],
-    "min_samples_split": np.arange(2, 20, 2),
-    "min_samples_leaf": np.arange(1, 20, 2),
-    "max_features": [0.5, 1, "sqrt", "log2"],
-    "bootstrap": [True],
-}
-
-hparam_grid = {"regressor__" + k: v for k, v in hparam_grid.items()}
+hparam_grid = {"regressor__" + k: v for k, v in features_info.hparam_grid.items()}
 
 
 def search_model(X, y):

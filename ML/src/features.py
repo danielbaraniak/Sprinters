@@ -1,48 +1,16 @@
-import pandas as pd
 import numpy as np
+import pandas as pd
 from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
 from sklearn.impute import SimpleImputer
+from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import (
-    StandardScaler,
+    FunctionTransformer,
     OneHotEncoder,
     OrdinalEncoder,
-    FunctionTransformer,
+    StandardScaler,
 )
 
-columns_order = [
-    "offer_type",
-    "floor",
-    "area",
-    "rooms",
-    "offer_type_of_building",
-    "market",
-    "longitude",
-    "latitude",
-    "city_name",
-    "population",
-    "voivodeship",
-]
-
-dummies_features = []
-
-numeric_features = [
-    "longitude",
-    "latitude",
-    "area",
-    "population",
-]
-
-onehot_features = []
-
-ordinal_features = [
-    "rooms",
-    "offer_type",
-    "offer_type_of_building",
-    "market",
-    "city_name",
-    "floor",
-]
+from . import features_info
 
 
 def _dummies(df_e):
@@ -108,30 +76,18 @@ dummies_transformer = FunctionTransformer(
 
 preprocessor = ColumnTransformer(
     transformers=[
-        ("num", numeric_transformer, numeric_features),
-        ("one_hot", onehot_transformer, onehot_features),
-        ("dummies", dummies_transformer, dummies_features),
-        ("ordinal", ordinal_transformer, ordinal_features),
+        ("num", numeric_transformer, features_info.numeric_features),
+        ("one_hot", onehot_transformer, features_info.onehot_features),
+        ("dummies", dummies_transformer, features_info.dummies_features),
+        ("ordinal", ordinal_transformer, features_info.ordinal_features),
     ],
     n_jobs=-1,
 )
 
 
-def get_preprocessor(
-    *, dataset_path: str = None, df: pd.DataFrame = None
-) -> ColumnTransformer:
-    """
-    dataset_path: path to the file with serialized dataset (ML/data/interim/...)
-    df: dataframe to be used for fitting.
-    """
-    if dataset_path:
-        df = pd.read_feather(dataset_path)
-        df.drop(["index", "price"], axis=1, inplace=True)
+def get_preprocessor(df: pd.DataFrame) -> ColumnTransformer:
 
-    if df is None:
-        raise ValueError("Empty dataframe. Specify 'dataset_path' or 'df'.")
-
-    preprocessor.fit(df.reindex(columns=columns_order))
+    preprocessor.fit(df.reindex(columns=features_info.columns_order))
     return preprocessor
 
 
