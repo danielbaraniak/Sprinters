@@ -1,18 +1,18 @@
+from configparser import ConfigParser
 from datetime import datetime
+from os import path
 
 import joblib
+import numpy as np
 from sklearn.compose import TransformedTargetRegressor
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
 
-from .data import get_dataset, features_target_split
+from .data import features_target_split, get_dataset
 from .features import get_preprocessor
 from .features_info import target_column
 from .models import search_model
-from configparser import ConfigParser
-from os import path
-
 
 config = ConfigParser()
 config.read("settings.cfg")
@@ -26,7 +26,7 @@ target = target_column
 
 
 def get_model_name(suffix: str):
-    return f"{datetime.now():%Y-%m-%d_%H:%M:%S}{suffix}.pkl"
+    return f"{datetime.now():%Y-%m-%dT%H%M%S}{suffix}.pkl"
 
 
 def get_model_path(model_dir, model_name):
