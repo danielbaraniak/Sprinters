@@ -18,7 +18,7 @@ pip3 install -r requirements.txt
 Finally run flask application
 
 ```bash
-python3 app.py
+python3 launch.py --web
 ```
 
 ### Settings
