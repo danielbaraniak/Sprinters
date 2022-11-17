@@ -128,4 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
+
+/ML/models/
+/ML/data/
 WebBackend/settings.cfg
