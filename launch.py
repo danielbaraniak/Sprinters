@@ -6,11 +6,11 @@ from ML.src import orchestrator
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Launch processes.")
+    parser = argparse.ArgumentParser(description='Launch processes.')
     parser.add_argument(
-        "--train", action="store_true", help="Create machine learning model."
+        '--train', action='store_true', help='Create machine learning model.'
     )
-    parser.add_argument("--web", action="store_true", help="Start web server.")
+    parser.add_argument('--web', action='store_true', help='Start web server.')
 
     args = parser.parse_args()
 
@@ -24,5 +24,5 @@ def main():
         parser.print_help()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()
