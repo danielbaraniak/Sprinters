@@ -22,6 +22,7 @@ model_output_path = path.join(
 
 target = "price"
 raw_data_path = config["ml"]["raw_dataset"]
+custom_model: RandomForestRegressor = eval(config["ml"].get("custom_model", "None"))
 
 
 def main():
@@ -31,12 +32,13 @@ def main():
     y = df[target]
 
     preprocessor = get_preprocessor(df=X)
-
     X = preprocessor.transform(X)
 
-    model = RandomForestRegressor(max_features="log2", n_estimators=180, n_jobs=-1)
-    model.fit(X, y)
-    # model = search_model(X, y)
+    if custom_model is not None:
+        model = custom_model
+        model.fit(X, y)
+    else:
+        model = search_model(X, y)
 
     print(f"{model.score(X, y)=}")
 
