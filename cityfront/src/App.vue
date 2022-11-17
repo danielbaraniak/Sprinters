@@ -42,8 +42,8 @@
     <label class="text1" for="market">Market:</label>
       <select v-model="posts.market" name="market" id="market">
         <option value="" selected disabled hidden></option>
-        <option value="Primary">Primary</option>
-        <option value="Aftermarket">Aftermarket</option>
+        <option value="primary">Primary</option>
+        <option value="aftermarket">Aftermarket</option>
       </select>
     <br>
     <br>
@@ -105,7 +105,11 @@ export default {
 
     search1(price) {
       Swal.fire({
-      title: price,
+      title: 'Predicted price',
+      text: Number(price).toLocaleString(undefined, {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+      }) + ' PLN',
       width: 1000,
       padding: '3em',
       color: '#ffffff',
@@ -131,7 +135,7 @@ export default {
 
 			let self = this;
 
-			axios.post(`${process.env.VUE_APP_APIURL}/predict-price`, {
+			axios.post(`http://127.0.0.1:5000/predict-price`, {
         'offer_type': self.posts.offer_type,
         'floor': self.posts.floor,
         'area': self.posts.area,
@@ -141,9 +145,9 @@ export default {
         "longitude": self.posts.longitude,
         "latitude": self.posts.latitude
       }).then(function (response) {
-        self.search1(response.data.result.predicted_price);
+        self.search1(response.data.predicted_price);
 			}) .catch(function(response){
-        self.error(response.data.result.error);
+        self.error(response.response.data.error);
       });
 		},
   }
