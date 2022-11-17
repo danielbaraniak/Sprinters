@@ -149,5 +149,10 @@ pnpm-debug.log*
 
 # Vue files
 .DS_Store
-node_modules
-/dist
+node_modules/
+dist/
+
+ML/models/
+ML/data/
+settings.cfg
+
