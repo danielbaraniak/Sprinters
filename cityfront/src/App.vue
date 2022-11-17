@@ -22,7 +22,7 @@
       </select>
     <br>
     <label class="text1" for="area">Area:</label>
-      <input v-model.number="posts.area" type="number" id="area" name="area" min="10.00" step="0.01" oninput="validity.valid||(value='');">
+    <input v-model.number="posts.area" id="area" name="area" type="number" min="0" step='0.01' oninput="validity.valid||(value='');">
     <br>
     <label class="text1" for="rooms">No of rooms:</label>
       <select v-model.number="posts.rooms" name="rooms" id="rooms">
