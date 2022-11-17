@@ -143,7 +143,7 @@ export default {
       }).then(function (response) {
         self.search1(response.data.result.price);
 			}) .catch(function(response){
-        self.error(response.data.result);
+        self.error(response.data.result.error);
       });
 		},
   }
