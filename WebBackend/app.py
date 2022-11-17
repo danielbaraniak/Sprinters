@@ -70,7 +70,12 @@ def predict_price():
     if request.method == 'POST':
         data = json.loads(request.data)
         if not validator.validate(data):
-            return validator.errors
+            field_name = next(iter(validator.errors))
+            prepared_name = field_name.replace('_', ' ').capitalize()
+            error_message = validator.errors[field_name][0].capitalize()
+            return {
+                'error': f'[{prepared_name}] {error_message}'
+            }, 400
         features = {}
         for field in fields:
             features[field] = data.get(field)
