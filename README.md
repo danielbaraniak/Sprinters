@@ -53,29 +53,30 @@ result = loaded_model.predict(single_X)[0]
 
 ### Installation
 
-Firstly
-```bash
-cd WebBackend
-```
 Create and run virtual environment
 
 ```bash
-python3 -m venv sample-name
-source sample-name/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 ```
+
 Install all the requirements
+
 ```bash
 pip3 install -r requirements.txt
 ```
+
 Finally run flask application
+
 ```bash
 python3 app.py
 ```
 
 ### Settings
+
 - Find file template_settings.cfg
 - Copy it and rename to settings.cfg
-- Get your api key: https://rapidapi.com/Noggle/api/reverse-geocoding-and-geolocation-service/
+- Get your api key: <https://rapidapi.com/Noggle/api/reverse-geocoding-and-geolocation-service/>
 - Fill in necessary settings
 
 ### API Reference
@@ -85,10 +86,13 @@ python3 app.py
 ```bash
   POST /predict-price
 ```
+
 Limits
+
+```bash
+One can send 1 request for every 5 seconds.
 ```
-  One can send 1 request for every 5 seconds.
-```
+
 Input
 | Parameter | Type     | Is required| Restrictions  |
 | :-------- | :------- | :--------- | :----------- |

@@ -14,7 +14,7 @@ from os import path
 
 
 config = ConfigParser()
-config.read("ML/settings.cfg")
+config.read("settings.cfg")
 config = dict(config["ml"])
 
 

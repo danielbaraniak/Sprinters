@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 
-/ML/models/
-/ML/data/
-WebBackend/settings.cfg
+ML/models/
+ML/data/
+settings.cfg
