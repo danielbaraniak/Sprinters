@@ -15,7 +15,10 @@ settings = dict(config.items('sprinters-config'))
 API_KEY = settings['api_key']
 model = joblib.load(settings['model_path'])
 
-fields = ['offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building', 'market', 'longitude', 'latitude']
+fields = [
+    'offer_type', 'floor', 'area', 'rooms', 'offer_type_of_building',
+    'market', 'longitude', 'latitude'
+]
 
 schema = {
     'offer_type': {'type': 'string', 'required': True},
@@ -37,18 +40,30 @@ limiter = Limiter(
     default_limits=['1/5seconds']
 )
 
+
 def _get_location_data(latitude, longitude):
     url = 'https://geocodeapi.p.rapidapi.com/GetNearestCities'
     location_fields = ['Population', 'CountryId', 'City']
-    querystring = {f'latitude':{str(latitude)}, 'longitude':{str(longitude)}, 'range':'0'}
+    querystring = {
+        'latitude': str(latitude),
+        'longitude': str(longitude),
+        'range': '0'
+    }
     headers = {
         'X-RapidAPI-Key': API_KEY,
         'X-RapidAPI-Host': 'geocodeapi.p.rapidapi.com'
     }
-    response = requests.request('GET', url, headers=headers, params=querystring)
+    response = requests.request(
+        'GET', url,
+        headers=headers, params=querystring
+    )
     nearest_city = json.loads(response.content)[0]
-    cleared_location = {location_field: nearest_city[location_field] for location_field in location_fields}
+    cleared_location = {
+        location_field: nearest_city[location_field]
+        for location_field in location_fields
+    }
     return cleared_location
+
 
 @app.route('/predict-price', methods=['POST'])
 def predict_price():
@@ -72,6 +87,7 @@ def predict_price():
     return {
         'predicted_price': str(prediction)
     }
+
 
 if __name__ == '__main__':
     app.run(debug=True)
