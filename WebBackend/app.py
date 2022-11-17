@@ -1,12 +1,5 @@
-import json
-import sys
-
-if ".." not in sys.path:
-    sys.path.insert(0, "..")
-
-print(f"{sys.path=}")
-
 import configparser
+import json
 
 import joblib
 import pandas as pd
@@ -15,7 +8,6 @@ from cerberus import Validator
 from flask import Flask, request
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
-from . import ML
 
 config = configparser.RawConfigParser()
 config.read("settings.cfg")
@@ -89,8 +81,4 @@ def predict_price():
         features["city_name"] = location_features["City"]
         ready_data = pd.DataFrame({k: [v] for k, v in features.items()})
         prediction = model.predict(ready_data)[0]
-    return {"predicted_price": str(prediction)}
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
+    return {"predicted_price": prediction}

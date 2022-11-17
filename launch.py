@@ -17,7 +17,8 @@ def main():
     if args.train:
         orchestrator.main()
     elif args.web:
-        pass
+        from WebBackend.app import app
+        app.run(debug=True)
 
     else:
         parser.print_help()
