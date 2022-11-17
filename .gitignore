@@ -152,6 +152,7 @@ pnpm-debug.log*
 node_modules/
 dist/
 
-ML/models/
-ML/data/
+ml/models/
+ml/data/
 settings.cfg
+frontend/package-lock.json

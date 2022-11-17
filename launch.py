@@ -2,7 +2,7 @@
 
 import argparse
 
-from ML.src import orchestrator
+from ml.src import orchestrator
 
 
 def main():
@@ -17,7 +17,7 @@ def main():
     if args.train:
         orchestrator.main()
     elif args.web:
-        from WebBackend.app import app
+        from webservice.app import app
         app.run(debug=True)
 
     else:
