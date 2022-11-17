@@ -141,7 +141,7 @@ export default {
         "longitude": self.posts.longitude,
         "latitude": self.posts.latitude
       }).then(function (response) {
-        self.search1(response.data.result.price);
+        self.search1(response.data.result.predicted_price);
 			}) .catch(function(response){
         self.error(response.data.result.error);
       });
