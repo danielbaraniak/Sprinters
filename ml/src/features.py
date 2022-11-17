@@ -28,6 +28,14 @@ def _dummies_feature_names_out(transformer, input_features: list[str]) -> list:
     return result
 
 
+def _ignore_case(df):
+    return df.apply(lambda x: x.astype(str).str.upper())
+
+
+ignore_case_transformer = FunctionTransformer(
+    _ignore_case, feature_names_out="one-to-one"
+)
+
 numeric_transformer = Pipeline(
     steps=[
         ("imputer", SimpleImputer(strategy="median")),
@@ -44,6 +52,7 @@ onehot_transformer = Pipeline(
                 fill_value="missing",
             ),
         ),
+        ("ignore_case", ignore_case_transformer),
         (
             "onehot",
             OneHotEncoder(
@@ -56,6 +65,7 @@ onehot_transformer = Pipeline(
 
 ordinal_transformer = Pipeline(
     steps=[
+        ("ignore_case", ignore_case_transformer),
         (
             "ordinal",
             OrdinalEncoder(encoded_missing_value=-2.0),
@@ -66,6 +76,7 @@ ordinal_transformer = Pipeline(
 dummies_transformer = FunctionTransformer(
     _dummies, feature_names_out=_dummies_feature_names_out
 )
+
 
 preprocessor = ColumnTransformer(
     transformers=[
