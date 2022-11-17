@@ -1,3 +1,5 @@
+target_column = "price"
+
 useful_columns = [
     "price",
     "offer_type",
