@@ -47,7 +47,7 @@ loaded_model = joblib.load("../models/2022-11-13 19:09:05.094617.pkl")
 single_X = pd.DataFrame({k: [v] for k, v in request.items()})
 
 result = loaded_model.predict(single_X)[0]
-
+```
 
 ## WebBackend
 
