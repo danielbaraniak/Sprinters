@@ -60,7 +60,6 @@ ordinal_features = [
     "offer_type",
     "offer_type_of_building",
     "market",
-    "city_name",
     "floor",
 ]
 

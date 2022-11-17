@@ -57,13 +57,6 @@ onehot_transformer = Pipeline(
 ordinal_transformer = Pipeline(
     steps=[
         (
-            "imputer",
-            SimpleImputer(
-                strategy="constant",
-                fill_value="missing",
-            ),
-        ),
-        (
             "ordinal",
             OrdinalEncoder(encoded_missing_value=-2.0),
         ),

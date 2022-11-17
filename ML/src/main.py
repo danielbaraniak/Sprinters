@@ -4,7 +4,7 @@ import joblib
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import Pipeline
 
-from .data import clean_dataset
+from .data import get_dataset, features_target_split
 from .features import get_preprocessor
 from .features_info import target_column
 from .models import search_model
@@ -23,22 +23,17 @@ custom_model: RandomForestRegressor = eval(config.get("custom_model", "None"))
 target = target_column
 
 
-def get_model_path(model_score):
-    return path.join(
-        model_dir,
-        f"{datetime.now():%Y-%m-%d_%H:%M:%S}_score({model_score:.3f}).pkl",
-    )
+def get_model_name(model_score):
+    return f"{datetime.now():%Y-%m-%d_%H:%M:%S}_score({model_score:.3f}).pkl"
 
 
-def split_features_target(df, target: str):
-    X = df.drop(target, axis=1)
-    y = df[target]
-    return X, y
+def get_model_path(model_dir, model_name):
+    return path.join(model_dir, model_name)
 
 
 def main():
-    df = clean_dataset(in_path=raw_data_path)
-    X, y = split_features_target(df, target)
+    df = get_dataset(in_path=raw_data_path)
+    X, y = features_target_split(df, target)
 
     preprocessor = get_preprocessor(df=X)
     X = preprocessor.transform(X)
@@ -57,8 +52,10 @@ def main():
     )
 
     model_score = model.score(X, y)
+    model_path = get_model_path(model_dir, get_model_name(model_score))
+
     print(f"{model_score=}")
-    joblib.dump(pipeline, get_model_path(model_score))
+    joblib.dump(pipeline, model_path)
 
 
 if __name__ == "__main__":
