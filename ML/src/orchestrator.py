@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import joblib
+from sklearn.compose import TransformedTargetRegressor
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.pipeline import Pipeline
 from sklearn.model_selection import train_test_split
@@ -20,7 +21,7 @@ config = dict(config["ml"])
 
 model_dir = config["model_dir"]
 raw_data_path = config["raw_dataset"]
-custom_model: RandomForestRegressor = eval(config.get("custom_model", "None"))
+custom_model: TransformedTargetRegressor = eval(config.get("custom_model", "None"))
 target = target_column
 
 

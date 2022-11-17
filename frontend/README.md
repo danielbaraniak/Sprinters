@@ -1,4 +1,4 @@
-# cityfront
+# frontend
 
 ## Project setup
 
