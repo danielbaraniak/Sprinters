@@ -41,7 +41,6 @@ ordinal_features = [
     "offer_type_of_building",
     "market",
     "city_name",
-    "voivodeship",
     "floor",
 ]
 
@@ -115,7 +114,6 @@ preprocessor = ColumnTransformer(
         ("ordinal", ordinal_transformer, ordinal_features),
     ],
     n_jobs=-1,
-    remainder="passthrough",
 )
 
 
