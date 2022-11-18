@@ -39,6 +39,9 @@ class SprintersDriver:
     def _find_child_element_by_xpath(self, element, xpath: str) -> WebElement:
         return element.find_element(By.XPATH, xpath)
 
+    def _find_elements_by_xpath(self, xpath: str) -> List[WebElement]:
+        return self.driver.find_elements(By.XPATH, xpath)
+
     def close_cookies(self, cookies_config_routes: List[str]) -> bool:
         self.driver.implicitly_wait(3)
         which_route = 2#get_random_number_from_range(1, 2)
@@ -60,19 +63,26 @@ class SprintersDriver:
             return False
         return False
     
-    def _move_to_site(self, site: str) -> None:
+    def move_to_site(self, site: str) -> None:
         self.driver.get(site)
     
-    def move_to_next_site(self, pagination_selector: str, pagination_xpath_child: str) -> bool:
-        self.driver.implicitly_wait(3) #randomize between 3 and 7
-        try:
-            href_selector = self._find_element_by_xpath(pagination_selector)
-            self.driver.execute_script('window.scrollBy(0, 11000)')
-            self._move_to_site(self._find_child_element_by_xpath(href_selector, pagination_xpath_child).get_attribute('href'))
-            return True
-        except NoSuchElementException as ex:
-            print(ex)
-            return False
-        except ElementClickInterceptedException as ex:
-            print(ex)
-            return False
+    def get_next_href(self, pagination_selector: str, pagination_xpath_child: str) -> str:
+        return self._find_child_element_by_xpath(self._find_element_by_xpath(pagination_selector), pagination_xpath_child).get_attribute('href')
+    
+    def get_links_from_advertisements(self, js_objects, card_xpath_featured: str, card_xpath_href: str):
+        ox_links = []
+        otd_links = []
+        for js_object in js_objects:
+            try:
+                self._find_child_element_by_xpath(js_object, card_xpath_featured)
+                continue
+            except NoSuchElementException:
+                link_to_child_site = self._find_child_element_by_xpath(js_object, card_xpath_href).get_attribute('href')
+                if link_to_child_site.startswith('https://www.otod'):
+                    otd_links.append(link_to_child_site)
+                    continue
+                ox_links.append(link_to_child_site)
+        return ox_links, otd_links
+            
+    def get_ads_list(self, multiple_selector: str) -> List:
+        return self._find_elements_by_xpath(multiple_selector)
