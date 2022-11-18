@@ -58,7 +58,7 @@ def main():
     for otd_link in otd_links:
         flats_data.append(get_flat_otd_data(otd_link))
         time.sleep(get_random_number_from_range(15, 60))
-
+    
     dump_csv_dict_data(flats_data)
 
 if __name__ == '__main__':
