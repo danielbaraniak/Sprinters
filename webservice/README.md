@@ -1,36 +1,23 @@
-## WebBackend
+# WebBackend
 
-### Installation
+## Usage
 
-Create and run virtual environment
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-Install all the requirements
-
-```bash
-pip3 install -r requirements.txt
-```
-
-Finally run flask application
+Run flask app
 
 ```bash
 python3 launch.py --web
 ```
 
-### Settings
+## Settings
 
 - Find file template_settings.cfg
 - Copy it and rename to settings.cfg
 - Get your api key: <https://rapidapi.com/Noggle/api/reverse-geocoding-and-geolocation-service/>
 - Fill in necessary settings
 
-### API Reference
+## API Reference
 
-#### Get predicted price
+### Get predicted price
 
 ```bash
   POST /predict-price
