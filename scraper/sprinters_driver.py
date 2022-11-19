@@ -44,7 +44,7 @@ class SprintersDriver:
 
     def close_cookies(self, cookies_config_routes: List[str]) -> bool:
         self.driver.implicitly_wait(3)
-        which_route = 2#get_random_number_from_range(1, 2)
+        which_route = get_random_number_from_range(1, 2)
         try:
             if which_route == 1:
                 self.driver.implicitly_wait(1)
