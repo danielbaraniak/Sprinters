@@ -39,4 +39,12 @@ Competence project
     python3 -m launch.py --web
     ```
 
-- [How to use frontend?](frontend/README.md)
+    [How to use frontend?](frontend/README.md)
+
+- Start scraping worker
+    ```bash
+    python3 -m launch.py --scraper
+    ```
+
+    [Certain info about scraping worker](scraper/README.md)
+    

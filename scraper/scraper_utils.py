@@ -1,9 +1,10 @@
-from random import randint
 import requests
 import csv
-from typing import List, Dict
 import pickle
 import uuid
+
+from random import randint
+from typing import List, Dict
 
 SEARCHED_FIELDS_OTD = {
     'offer_type': '"user_type":', 

@@ -7,9 +7,10 @@ from webdriver_manager.core.utils import ChromeType
 from selenium.webdriver.chrome.service import Service as BraveService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
-from scraper_utils import get_random_number_from_range
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from typing import List
+
+from .scraper_utils import get_random_number_from_range
 
 class SprintersDriver:
     def __init__(self) -> None:

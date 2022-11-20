@@ -1,24 +1,24 @@
-from configparser import ConfigParser
-from sprinters_driver import SprintersDriver
-from scraper_utils import get_random_number_from_range
 import time
-from scraper_utils import get_flat_ox_data, get_flat_otd_data, dump_csv_dict_data
+
+from configparser import ConfigParser
+
+from .sprinters_driver import SprintersDriver
+from .scraper_utils import get_random_number_from_range
+from .scraper_utils import get_flat_ox_data, get_flat_otd_data, dump_csv_dict_data
+
+config = ConfigParser()
+config.read('settings.cfg')
+settings = dict(config.items('scraper'))
 
 def main():
-    configparser = ConfigParser()
-    configparser.read('config.ini')
-
-    site = configparser.get('default', 'site')
-
     sprinters = SprintersDriver()
-
-    sprinters.move_to_site(site)
+    sprinters.move_to_site(settings['site'])
 
     cookies_closed = sprinters.close_cookies(
         [
-            configparser.get('default', 'BUTTON_ACCEPT_COOKIES'), \
-            configparser.get('default', 'BUTTON_SETTINGS_COOKIES'), \
-            configparser.get('default', 'BUTTON_SAVE_PREFERENCES_COOKIES')
+            settings['button_accept_cookies'], 
+            settings['button_settings_cookies'], 
+            settings['button_save_preferences_cookies']
         ]
     )
 
@@ -29,24 +29,26 @@ def main():
     otd_links = []
     
     #getting links from site
-    for _ in range(int(configparser.get('default', 'MAX_PAGINATION'))):
+    for _ in range(int(settings['max_pagination'])):
         js_objects = sprinters._find_elements_by_xpath(
-            configparser.get('default', 'ADVERTISEMENT_CSS_SELECTOR')
+            settings['advertisement_css_selector']
         )
-        print('got js objects')
+
         new_ox_links, new_otd_links = sprinters.get_links_from_advertisements(
             js_objects, 
-            configparser.get('default', 'ADVERTISEMENT_CSS_SELECTOR_FEATURED'), 
-            configparser.get('default', 'ADVERTISEMENT_CSS_SELECTOR_HREF')
+            settings['advertisement_css_selector_featured'], 
+            settings['advertisement_css_selector_href']
         )
+
         ox_links.extend(new_ox_links)
         otd_links.extend(new_otd_links)
 
         next_site = sprinters.get_next_href(
-            configparser.get('default', 'PAGINATION_CSS_SELECTOR_PARENT'), 
-            configparser.get('default', 'PAGINATION_CSS_SELECTOR_CHILD')
+            settings['pagination_css_selector_parent'], 
+            settings['pagination_css_selector_child']
         )
-        time.sleep(get_random_number_from_range(2, 14))
+
+        time.sleep(get_random_number_from_range(3, 10))
         sprinters.move_to_site(next_site)
         
     #gather data from links
@@ -60,6 +62,3 @@ def main():
         time.sleep(get_random_number_from_range(15, 60))
     
     dump_csv_dict_data(flats_data)
-
-if __name__ == '__main__':
-    main()
