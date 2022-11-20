@@ -41,7 +41,7 @@ def get_flat_ox_data(link: str) -> dict:
         for key, value in SEARCHED_FIELDS_OX.items():
             for i, item in enumerate(str_request_data):
                 if value[0] in item:
-                    filtered_data[key] = str_request_data[i+value[1]]
+                    filtered_data[key] = str_request_data[i + value[1]]
 
         for item in filtered_data.keys():
             if 'floor' in item:
