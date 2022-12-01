@@ -1,6 +1,6 @@
 # Sprinters
 
-Competance project
+Competence project
 
 ## Instalation
 
@@ -28,7 +28,7 @@ Competance project
 - Training a model
 
     ```bash
-    python3 -m launch.py --train
+    python3 -m launch --train
     ```
 
     About [model configuration](/ml/README.md#generating-models).
@@ -36,7 +36,14 @@ Competance project
 - Run flask application
 
     ```bash
-    python3 -m launch.py --web
+    python3 -m launch --web
+    ```
+    
+- [How to use frontend?](frontend/README.md)
+
+- Start scraping worker
+    ```bash
+    python3 -m launch --scrape
     ```
 
-- [How to use frontend?](/frontend/README.md)
+    [Certain info about scraping worker](scraper/README.md)

@@ -43,7 +43,7 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-limiter = Limiter(app, key_func=get_remote_address, default_limits=['1/5seconds'])
+limiter = Limiter(app, key_func=get_remote_address, default_limits=['2/5seconds'])
 
 
 def _get_location_data(latitude, longitude):
