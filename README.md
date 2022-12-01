@@ -19,9 +19,9 @@ Competence project
 
 1. Create a file `settings.cfg`:
 
-    1. Find a file [`template_settings.cfg`](template_settings.cfg)
+    1. Find a file [`template_settings.cfg`](/template_settings.cfg)
     1. Copy it and rename to `settings.cfg`
-    1. Fill in necessary settings. [Learn More](webservice/README.md#settings)
+    1. Fill in necessary settings. [Learn More](/webservice/README.md#settings)
 
 ## Usage
 
@@ -31,15 +31,15 @@ Competence project
     python3 -m launch --train
     ```
 
-    About [model configuration](ml/README.md#generating-models).
+    About [model configuration](/ml/README.md#generating-models).
 
 - Run flask application
 
     ```bash
     python3 -m launch --web
     ```
-
-    [How to use frontend?](frontend/README.md)
+    
+- [How to use frontend?](frontend/README.md)
 
 - Start scraping worker
     ```bash
@@ -47,4 +47,3 @@ Competence project
     ```
 
     [Certain info about scraping worker](scraper/README.md)
-    

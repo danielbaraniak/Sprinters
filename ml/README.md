@@ -2,8 +2,8 @@
 
 ## Generating models
 
-- [`ml.src.features_info`](ml/src/features_info.py) describes which features are used for training.
-- [`ml/settings.cfg`](ml/settings.cfg) contains configuration of the folders and `custom_model`. If `custom_model` is not set, hyperparameters are found from [`ml.src.features_info.hyparam_grid`](ml/src/features_info.py).
+- [`ml.src.features_info`](/ml/src/features_info.py) describes which features are used for training.
+- [`ml/settings.cfg`](/ml/settings.cfg) contains configuration of the folders and `custom_model`. If `custom_model` is not set, hyperparameters are found from [`ml.src.features_info.hyparam_grid`](/ml/src/features_info.py).
 
 Following command generates the model:
 
