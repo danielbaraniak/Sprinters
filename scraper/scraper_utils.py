@@ -1,7 +1,6 @@
 import requests
 import csv
 import pickle
-import uuid
 import re
 import json
 

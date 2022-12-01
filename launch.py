@@ -6,7 +6,7 @@ def main():
 
     parser.add_argument('--train', action='store_true', help='Create machine learning model.')
     parser.add_argument('--web', action='store_true', help='Start web server.')
-    parser.add_argument('--scrap', action='store_true', help='Invoke scraping worker.')
+    parser.add_argument('--scrape', action='store_true', help='Invoke scraping worker.')
     
     args = parser.parse_args()
 
