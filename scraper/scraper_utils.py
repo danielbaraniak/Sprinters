@@ -71,7 +71,7 @@ def check_if_data_contains_all_fields(dict_data: dict, searched_fields: dict) ->
     return dict_data
 
 def dump_csv_dict_data(data: List[Dict]):
-    with open('artifact.csv', 'w', newline='') as csv_dump:
+    with open('ml/data/raw/artifact.csv', 'w', newline='') as csv_dump:
         DICT_VALUES = [
             'price',
             "offer_type",

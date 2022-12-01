@@ -19,10 +19,8 @@ def main():
     elif args.scrape:
         from scraper import scraper
         scraper.main()
-
     else:
         parser.print_help()
-
 
 if __name__ == '__main__':
     main()
