@@ -65,7 +65,6 @@ onehot_transformer = Pipeline(
 
 ordinal_transformer = Pipeline(
     steps=[
-        ("ignore_case", ignore_case_transformer),
         (
             "ordinal",
             OrdinalEncoder(encoded_missing_value=-2.0),
