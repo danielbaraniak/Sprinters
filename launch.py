@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-
 import argparse
-
-
 
 def main():
     parser = argparse.ArgumentParser(description='Launch processes.')

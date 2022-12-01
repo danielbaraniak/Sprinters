@@ -16,15 +16,12 @@ from .scraper_utils import get_random_number_from_range
 class SprintersDriver:
     def __init__(self) -> None:
         browser = get_random_number_from_range(1, 3)
-        try:
-            if browser == 1:
-                self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
-            elif browser == 2:
-                self.driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
-            elif browser == 3:
-                self.driver = webdriver.Chrome(service=BraveService(ChromeDriverManager(chrome_type=ChromeType.BRAVE).install()))
-        except Exception as err:
-            print(err)
+        if browser == 1:
+            self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()))
+        elif browser == 2:
+            self.driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
+        elif browser == 3:
+            self.driver = webdriver.Chrome(service=BraveService(ChromeDriverManager(chrome_type=ChromeType.BRAVE).install()))
 
     def _find_element_by_class_name(self, element: str) -> WebElement:
         return self.driver.find_element(By.CLASS_NAME, element)

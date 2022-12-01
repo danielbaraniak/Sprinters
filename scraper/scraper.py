@@ -48,17 +48,17 @@ def main():
             settings['pagination_css_selector_child']
         )
 
-        time.sleep(get_random_number_from_range(3, 10))
+        time.sleep(get_random_number_from_range(3, 5))
         sprinters.move_to_site(next_site)
         
     #gather data from links
     flats_data: list[dict] = []
-    for ox_link in ox_links:
+    for ox_link in ox_links[:2]:
         flats_data.append(get_flat_ox_data(ox_link))
-        time.sleep(get_random_number_from_range(15, 60))
+        time.sleep(get_random_number_from_range(4, 5))
     
-    for otd_link in otd_links:
+    for otd_link in otd_links[:2]:
         flats_data.append(get_flat_otd_data(otd_link))
-        time.sleep(get_random_number_from_range(15, 60))
+        time.sleep(get_random_number_from_range(4, 5))
     
     dump_csv_dict_data(flats_data)
