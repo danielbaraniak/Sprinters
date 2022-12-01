@@ -16,7 +16,7 @@ def main():
     elif args.web:
         from webservice.app import app
         app.run(debug=True)
-    elif args.scrap:
+    elif args.scrape:
         from scraper import scraper
         scraper.main()
 

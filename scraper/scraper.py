@@ -53,11 +53,11 @@ def main():
         
     #gather data from links
     flats_data: list[dict] = []
-    for ox_link in ox_links[:2]:
+    for ox_link in ox_links:
         flats_data.append(get_flat_ox_data(ox_link))
         time.sleep(get_random_number_from_range(4, 5))
     
-    for otd_link in otd_links[:2]:
+    for otd_link in otd_links:
         flats_data.append(get_flat_otd_data(otd_link))
         time.sleep(get_random_number_from_range(4, 5))
     
