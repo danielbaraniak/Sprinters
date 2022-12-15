@@ -3,9 +3,9 @@ from datetime import datetime
 from os import path
 
 import joblib
-import numpy as np
-from sklearn.compose import TransformedTargetRegressor
-from sklearn.ensemble import RandomForestRegressor
+import numpy as np  # can be used in eval
+from sklearn.compose import TransformedTargetRegressor  # can be used in eval
+from sklearn.ensemble import RandomForestRegressor  # can be used in eval
 from sklearn.model_selection import train_test_split
 from sklearn.pipeline import Pipeline
 
@@ -21,7 +21,7 @@ config = dict(config["ml"])
 
 model_dir = config["model_dir"]
 raw_data_path = config["raw_dataset"]
-custom_model: TransformedTargetRegressor = eval(config.get("custom_model", "None"))
+custom_model = eval(config.get("custom_model", "None"))
 target = target_column
 
 

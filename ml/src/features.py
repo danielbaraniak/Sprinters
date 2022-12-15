@@ -7,7 +7,6 @@ from sklearn.preprocessing import (
     FunctionTransformer,
     OneHotEncoder,
     OrdinalEncoder,
-    StandardScaler,
 )
 
 from . import features_info
@@ -19,7 +18,7 @@ def _dummies(df_e):
     return df_e
 
 
-def _dummies_feature_names_out(transformer, input_features: list[str]) -> list:
+def _dummies_feature_names_out(_, input_features: list[str]) -> list:
     result = []
     for f in input_features:
         result.append(f)
@@ -39,7 +38,6 @@ ignore_case_transformer = FunctionTransformer(
 numeric_transformer = Pipeline(
     steps=[
         ("imputer", SimpleImputer(strategy="median")),
-        # ("scaler", StandardScaler()),
     ]
 )
 
