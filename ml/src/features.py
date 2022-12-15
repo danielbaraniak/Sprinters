@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from typing import List
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
 from sklearn.pipeline import Pipeline
@@ -19,7 +20,7 @@ def _dummies(df_e):
     return df_e
 
 
-def _dummies_feature_names_out(transformer, input_features: list[str]) -> list:
+def _dummies_feature_names_out(transformer, input_features: List[str]) -> List:
     result = []
     for f in input_features:
         result.append(f)

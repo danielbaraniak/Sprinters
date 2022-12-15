@@ -8,3 +8,5 @@ pandas
 requests
 scikit_learn
 setuptools
+selenium
+webdriver_manager
