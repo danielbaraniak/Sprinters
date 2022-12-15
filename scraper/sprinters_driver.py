@@ -10,8 +10,8 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
 from time import sleep as time_sleep
 from typing import List
-
 from .scraper_utils import get_random_number_from_range
+
 
 class SprintersDriver:
     def __init__(self) -> None:
@@ -25,16 +25,16 @@ class SprintersDriver:
 
     def _find_element_by_class_name(self, element: str) -> WebElement:
         return self.driver.find_element(By.CLASS_NAME, element)
-    
+
     def _find_element_by_id(self, element: str) -> WebElement:
         return self.driver.find_element(By.ID, element)
-    
+
     def _find_element_by_css_selector(self, element: str) -> WebElement:
         return self.driver.find_element(By.CSS_SELECTOR, element)
-    
+
     def _find_element_by_xpath(self, xpath: str) -> WebElement:
         return self.driver.find_element(By.XPATH, xpath)
-    
+
     def _find_child_element_by_xpath(self, element, xpath: str) -> WebElement:
         return element.find_element(By.XPATH, xpath)
 
@@ -60,13 +60,14 @@ class SprintersDriver:
             print(f'ElementClickInterceptedException: {ex}')
             return False
         return False
-    
+
     def move_to_site(self, site: str) -> None:
         self.driver.get(site)
-    
+
     def get_next_href(self, pagination_selector: str, pagination_xpath_child: str) -> str:
-        return self._find_child_element_by_xpath(self._find_element_by_xpath(pagination_selector), pagination_xpath_child).get_attribute('href')
-    
+        return self._find_child_element_by_xpath(self._find_element_by_xpath(pagination_selector),
+                                                 pagination_xpath_child).get_attribute('href')
+
     def get_links_from_advertisements(self, js_objects, card_xpath_featured: str, card_xpath_href: str):
         ox_links = []
         otd_links = []
@@ -75,12 +76,13 @@ class SprintersDriver:
                 self._find_child_element_by_xpath(js_object, card_xpath_featured)
                 continue
             except NoSuchElementException:
-                link_to_child_site = self._find_child_element_by_xpath(js_object, card_xpath_href).get_attribute('href')
+                link_to_child_site = self._find_child_element_by_xpath(js_object,
+                                                                       card_xpath_href).get_attribute('href')
                 if link_to_child_site.startswith('https://www.otod'):
                     otd_links.append(link_to_child_site)
                     continue
                 ox_links.append(link_to_child_site)
         return ox_links, otd_links
-            
+
     def get_ads_list(self, multiple_selector: str) -> List:
         return self._find_elements_by_xpath(multiple_selector)
