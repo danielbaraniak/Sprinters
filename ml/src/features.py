@@ -76,7 +76,6 @@ dummies_transformer = FunctionTransformer(
     _dummies, feature_names_out=_dummies_feature_names_out
 )
 
-
 preprocessor = ColumnTransformer(
     transformers=[
         ("num", numeric_transformer, features_info.numeric_features),
@@ -89,7 +88,6 @@ preprocessor = ColumnTransformer(
 
 
 def get_preprocessor(df: pd.DataFrame) -> ColumnTransformer:
-
     preprocessor.fit(df.reindex(columns=features_info.columns_order))
     return preprocessor
 
