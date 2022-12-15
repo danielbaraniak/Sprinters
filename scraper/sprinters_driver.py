@@ -1,10 +1,9 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
-from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.edge.service import Service as EdgeService
+from webdriver_manager.chrome import ChromeDriverManager
 from webdriver_manager.microsoft import EdgeChromiumDriverManager
 from webdriver_manager.core.utils import ChromeType
-from selenium.webdriver.chrome.service import Service as BraveService
 from selenium.webdriver.common.by import By
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import NoSuchElementException, ElementClickInterceptedException
@@ -21,7 +20,7 @@ class SprintersDriver:
         elif browser == 2:
             self.driver = webdriver.Edge(service=EdgeService(EdgeChromiumDriverManager().install()))
         elif browser == 3:
-            self.driver = webdriver.Chrome(service=BraveService(ChromeDriverManager(chrome_type=ChromeType.BRAVE).install()))
+            self.driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager(chrome_type=ChromeType.BRAVE).install()))
 
     def _find_element_by_class_name(self, element: str) -> WebElement:
         return self.driver.find_element(By.CLASS_NAME, element)
@@ -53,13 +52,13 @@ class SprintersDriver:
                 self._find_element_by_id(cookies_config_routes[1]).click()
                 self._find_element_by_class_name(cookies_config_routes[2]).click()
                 return True
+            return False
         except NoSuchElementException as ex:
             print(f'NoSuchElementException: {ex}')
-            return True
+            return False
         except ElementClickInterceptedException as ex:
             print(f'ElementClickInterceptedException: {ex}')
             return False
-        return False
 
     def move_to_site(self, site: str) -> None:
         self.driver.get(site)

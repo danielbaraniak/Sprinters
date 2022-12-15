@@ -13,7 +13,7 @@ def get_random_number_from_range(left_boundary: int, right_boundary: int) -> int
 
 
 def get_flat_ox_data(link: str):
-    response = requests.get(link)
+    response = requests.get(link, timeout=10)
     text = response.content.decode('utf-8')
     m = re.search(r'(?<=window.__PRERENDERED_STATE__= ")(.*?)(?="cookies\\":{}})', text)
     data = json.loads(m.group(0).replace('\\', '')[:-1] + '}')
@@ -36,7 +36,7 @@ def get_flat_ox_data(link: str):
 
 
 def get_flat_otd_data(link: str) -> dict:
-    response = requests.get(link)
+    response = requests.get(link, timeout=10)
     text = response.content.decode('utf-8')
     m = re.search(r'<script id="__NEXT_DATA__".*>(.*)</script>', text)
     data = json.loads(m.groups()[0])
@@ -76,7 +76,7 @@ def check_if_data_contains_all_fields(dict_data: dict, searched_fields: dict) ->
 
 
 def dump_csv_dict_data(data: List[Dict]):
-    with open('ml/data/raw/artifact.csv', 'w', newline='') as csv_dump:
+    with open('ml/data/raw/artifact.csv', 'w', newline='', encoding='utf-8') as csv_dump:
         DICT_VALUES = [
             'price',
             'offer_type',

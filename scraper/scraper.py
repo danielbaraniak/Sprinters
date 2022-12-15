@@ -1,10 +1,9 @@
 import time
-
 from configparser import ConfigParser
-
 from .sprinters_driver import SprintersDriver
 from .scraper_utils import get_random_number_from_range
 from .scraper_utils import get_flat_ox_data, get_flat_otd_data, dump_csv_dict_data
+from sys import exit as sys_exit
 
 config = ConfigParser()
 config.read('settings.cfg')
@@ -24,7 +23,7 @@ def main():
     )
 
     if not cookies_closed:
-        exit('Could not close cookies. Exiting...')
+        sys_exit('Could not close cookies. Exiting...')
 
     ox_links = []
     otd_links = []
